@@ -11,6 +11,14 @@ const cron = require('cron');
 const exec = require('child_process').exec;
 let cronJob;
 
+function keepAlive () {
+  // I take 500 ms to run
+  var http = require("https");
+  http.get(config.url);
+ setTimeout(keepAlive, 300000);
+}
+keepAlive();
+
 cache.html = Extra.HTML(); // eslint-disable-line no-use-before-define
 cache.markdown = Extra.markdown();
 cache.noSound = Extra
@@ -334,7 +342,6 @@ bot.catch((err) => {
   console.log('Error: ', err)
 })
 
-bot.startPolling();
 /*
 If you receive Error: 409: Conflict: can't use getUpdates method while
 webhook is active, comment bot.startPolling() out, remove // of the following
@@ -344,3 +351,6 @@ webhook by setting it to empty.
 bot.telegram.setWebhook("");
 bot.startWebhook("")
 */
+
+bot.telegram.setWebhook(`${config.url}/bot${config.bot_token}`);
+bot.startWebhook(`/bot${config.bot_token}`, null, config.port)

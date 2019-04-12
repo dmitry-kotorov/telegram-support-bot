@@ -21,27 +21,11 @@ is a support bot for telegram bots, using the Telegraf framework (by [@dotcypres
 
 ## Installation
 
-Install Node ( > 6.2 ) and npm ( > 5 ).
+Setup a heroku account. Do configuration as described in the next step. Then set your webhok:
 
-Run it
-```bash
-git clone https://github.com/bostrot/telegram-support-bot.git
-cd telegram-support-bot
-npm i
-node bin/support.js
-```
+    https://api.telegram.org/bot{my_bot_token}/setWebhook?url=https://{my_heroku_app_name}.herokuapp.com/{my_bot_token}
 
-Or: via install script (this will create two autostart files for systemctl (bot and supported bot) and enable both):
-
-```bash
-git clone https://github.com/bostrot/telegram-support-bot.git
-cd telegram-support-bot
-sudo bash setup
-sudo systemctl start YOUR_SUPPORT_BOT_SERVICE_NAME
-```
-
-Enter the bot location (ex. /home/bots/mybot.js) when asked and then your bot name (ex. mybot)
-`setup` will create two systemctl links in order that your bot will be automatically restarted when it crashes and runs in the background.
+Push it to your heroku branch.
 
 ## Configuration
 
@@ -68,7 +52,6 @@ Currently the support chat offers these commands (staff commands):
 * `/open` - lists all open tickets (messages where noone has replied yet)
 * `/close` - close a ticket manually (in case someone writes 'thank you')
 * `/id (userid)` - lists some stuff from the database about the user
-* `/ban` - ban a person from writing to your chat
 
 User commands:
 * `/start` - tells the user how to use this bot
@@ -95,6 +78,8 @@ BotFather will give you a *token*, something like `123456789:AbCdfGhIJKlmNoQQRsT
 
 
 ## Help
+
+Also you can write to my own support bot: @bostrot_bot
 
 You are welcome to contribute with pull requests, bug reports, ideas and donations. Join the forum if you have any general purpose questions: [bostrot.com](https://www.bostrot.com)
 

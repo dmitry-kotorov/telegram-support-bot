@@ -5,6 +5,8 @@ module.exports = {
   owner_id: 'YOUR_TELEGRAM_ID',
   supported_bot: 'service_name', // service name of the supported bot
   spam_time: 5 * 60 * 1000, // time (in MS) in which user may send 5 messages
+  port: process.env.PORT ||  3000,
+  url: process.env.URL || 'https://{your_app_name}.herokuapp.com',
 
   // customize your language
   startCommandText: 'Welcome in our support chat! Ask your question here.',
