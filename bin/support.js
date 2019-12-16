@@ -242,7 +242,7 @@ bot.command('open', (ctx) => {
 
             for (let i in userList) {
               if (userList[i]['userid'] !== null && userList[i]['userid'] !== undefined) {
-                openTickets += '<code>#t' + userList[i]['userid'].toString() + '</code>\n';
+                openTickets += '#t' + userList[i]['userid'].toString() + '\n';
               }
             }
             setTimeout(function() {
@@ -268,18 +268,25 @@ bot.command('close', (ctx) => {
       ctx.getChatAdministrators().then(function(admins) {
         admins = JSON.stringify(admins);
         if (
-          ctx.message.reply_to_message !== undefined &&
           admins.indexOf(ctx.from.id) > -1
         ) {
-          let replyText = ctx.message.reply_to_message.text;
-          let userid = replyText.match(new RegExp('#t' + '(.*)' + ' ' + config.lang_from));
-          
-          dbhandler.add(userid[1], "closed")
-          bot.telegram.sendMessage(
-            chat.id,
-            'Ticket <code>#t'+userid[1]+'</code> closed',
-            cache.noSound
-          );
+          let replyText = ctx.update.message.text;
+          let userid = replyText.match(/(\d+)/);
+
+          if (userid[1] !== undefined) {
+              dbhandler.add(userid[1], "closed")
+              bot.telegram.sendMessage(
+                  chat.id,
+                  'Ticket #t'+userid[1]+' closed',
+                  cache.noSound
+              );
+          } else {
+              bot.telegram.sendMessage(
+                  chat.id,
+                  'Unable to close ticket',
+                  cache.noSound
+              );
+          };
         }
       });
     }
